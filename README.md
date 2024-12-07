@@ -1,16 +1,32 @@
-# notes_app
+# App Flutter con Firebase
 
-A new Flutter project.
+## Descripción
 
-## Getting Started
+Esta aplicación Flutter permite a los usuarios registrarse e iniciar sesión mediante correo y contraseña, utilizando **Firebase Authentication**.
+Además, la app permite crear y mostrar notas almacenadas en **Firebase Firestore**.
 
-This project is a starting point for a Flutter application.
+## Tecnologías y Herramientas
 
-A few resources to get you started if this is your first Flutter project:
+- **Flutter**: Framework para desarrollar aplicaciones móviles.
+- **Firebase**: Plataforma de backend que usamos para la autenticación y la base de datos en tiempo real.
+- **FVM**: Flutter Version Management, usado para gestionar la versión de Flutter.
+- **Firestore**: Base de datos en la nube de Firebase utilizada para almacenar notas.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Requisitos previos
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### 1. FVM
+
+Esta aplicación usa **Flutter 3.10.1**, gestionado por **FVM**. Si aún no tienes **FVM** instalado, sigue los siguientes pasos:
+
+- Instala **FVM** siguiendo [la documentación oficial de FVM](https://fvm.app/docs/getting_started).
+- Después, usa el siguiente comando para asegurarte de que estás usando la versión correcta de Flutter:
+  ```bash
+  fvm use 3.10.1
+  Luego, ejecuta el siguiente comando para instalar las dependencias de la app: fvm flutter pub get
+
+
+
+### 2. FIREBASE
+
+---
+Yo te proporcionaré el archivo [google-services.json] para que lo agregues al directorio [android/app/] de tu proyecto.
