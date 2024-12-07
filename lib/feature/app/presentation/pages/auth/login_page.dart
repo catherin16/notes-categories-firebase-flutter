@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:notes_app/core/setting/app_assets.dart';
-import 'package:notes_app/feature/app/presentation/bloc/auth_bloc.dart';
-import 'package:notes_app/feature/app/presentation/bloc/auth_event.dart';
-import 'package:notes_app/feature/app/presentation/bloc/auth_state.dart';
+import 'package:notes_app/feature/app/presentation/bloc/auth/auth_bloc.dart';
+import 'package:notes_app/feature/app/presentation/bloc/auth/auth_event.dart';
+import 'package:notes_app/feature/app/presentation/bloc/auth/auth_state.dart';
 import 'package:notes_app/feature/app/presentation/widgets/button/ButtonPrimary.dart';
 import 'package:notes_app/feature/app/presentation/widgets/inputs/textFormField_outline.dart';
 
@@ -52,7 +52,7 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(height: 100),
+              const SizedBox(height: 140),
               const Text(
                 'Bienvenido a Notes App',
                 style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.black),

@@ -1,17 +1,22 @@
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:notes_app/feature/app/presentation/bloc/auth/auth_event.dart';
 import 'package:notes_app/feature/data/models/auth_model.dart';
-import 'package:notes_app/feature/domain/entities/auth_entity.dart';
-import 'auth_event.dart';
 import 'auth_state.dart';
 
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseAuth _auth;
+  final FirebaseFirestore _firestore;
 
-  AuthBloc() : super(AuthInitial()) {
+  // Constructor modificado para aceptar dependencias
+  AuthBloc({
+    FirebaseAuth? firebaseAuth,
+    FirebaseFirestore? firestore,
+  })  : _auth = firebaseAuth ?? FirebaseAuth.instance,
+        _firestore = firestore ?? FirebaseFirestore.instance,
+        super(AuthInitial()) {
     on<LoginEvent>((event, emit) async {
       emit(AuthLoading());
       try {
@@ -33,9 +38,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           password: event.password,
         );
 
-        // Almacenar el nombre y el correo en Firestore
         final userModel = UserModel(
-          name: event.name,
           email: event.email,
           password: event.password,
         );
@@ -45,8 +48,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             .set(userModel.toJson());
 
         emit(AuthAuthenticated(userCredential.user!));
-
-
       } catch (e) {
         emit(AuthError(e.toString()));
       }
