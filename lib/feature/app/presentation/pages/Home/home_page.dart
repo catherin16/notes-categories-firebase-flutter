@@ -72,18 +72,15 @@ class _HomePageState extends State<HomePage> {
                       ? state.notes
                       : state.notes.where((note) {
                     final searchLower = _selectedCategory!.toLowerCase();
-                    return (note.title?.toLowerCase().contains(searchLower) ??
-                        false) ||
-                        (note.description?.toLowerCase().contains(
-                            searchLower) ?? false) ||
-                        (note.category?.toLowerCase().contains(searchLower) ??
-                            false);
+                    return (note.title?.toLowerCase().contains(searchLower) ?? false) ||
+                        (note.description?.toLowerCase().contains(searchLower) ?? false) ||
+                        (note.category?.toLowerCase().contains(searchLower) ?? false);
                   }).toList();
 
                   if (filteredNotes.isEmpty) {
                     return const Center(
                       child: Text(
-                        'No hay notas para la búsqueda ingresada',
+                        'No hay notas ',
                         style: TextStyle(fontSize: 18, color: Colors.black),
                       ),
                     );
@@ -118,7 +115,8 @@ class _HomePageState extends State<HomePage> {
                   return const Center(child: Text('No hay notas'));
                 }
               },
-            ),
+            )
+
           ],
         ),
       ),
@@ -131,6 +129,7 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
 
 
   void _showCreateNoteModal(BuildContext context, NoteEntity? note) {
@@ -149,34 +148,40 @@ class _HomePageState extends State<HomePage> {
       builder: (context) {
         return StatefulBuilder(
           builder: (BuildContext context, StateSetter setState) {
-            return ModalNote(description: descriptionController, title: titleController, note:note, onchange:  (value) {
-              setState(() {
-                selectedCategory = value;
-              });
-            }, onPress: () async{  DateTime? pickedDate = await showDatePicker(
-              context: context,
-              initialDate: selectedDate ?? DateTime.now(),
-              firstDate: DateTime(2000),
-              lastDate: DateTime(2100),
-            );
-            if (pickedDate != null) {
-              setState(() {
-                selectedDate = pickedDate;
-              });
-            } },
+            return ModalNote(
+              description: descriptionController,
+              title: titleController,
+              note: note,
+              onchange: (value) {
+                setState(() {
+                  selectedCategory = value;
+                });
+              },
+              onPress: () async {
+                DateTime? pickedDate = await showDatePicker(
+                  context: context,
+                  initialDate: selectedDate ?? DateTime.now(),
+                  firstDate: DateTime(2000),
+                  lastDate: DateTime(2100),
+                );
+                if (pickedDate != null) {
+                  setState(() {
+                    selectedDate = pickedDate;
+                  });
+                }
+              },
               onPressButton: () {
                 if (titleController.text.isEmpty ||
                     descriptionController.text.isEmpty ||
                     selectedCategory == null) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text(
-                        'Por favor, complete todos los campos')),
+                    const SnackBar(content: Text('Por favor, complete todos los campos')),
                   );
                   return;
                 }
 
                 final newNote = NoteModel(
-                  id: note?.id ?? '',
+                  id: note?.id!, // Asegúrate de que el ID no esté vacío
                   title: titleController.text,
                   description: descriptionController.text,
                   category: selectedCategory,
@@ -184,18 +189,19 @@ class _HomePageState extends State<HomePage> {
                 );
 
                 if (note == null) {
-                  BlocProvider.of<NotesBloc>(context).add(
-                      AddNoteEvent(newNote));
+                  BlocProvider.of<NotesBloc>(context).add(AddNoteEvent(newNote));
                 } else {
                   BlocProvider.of<NotesBloc>(context).add(
                       UpdateNoteEvent(newNote));
                 }
 
                 Navigator.pop(context);
-              },);
+              },
+            );
           },
         );
       },
     );
   }
+
 }

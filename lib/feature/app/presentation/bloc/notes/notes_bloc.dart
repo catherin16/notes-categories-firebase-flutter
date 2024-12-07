@@ -49,7 +49,7 @@ class NotesBloc extends Bloc<NotesEvent, NotesState> {
       }
 
       final noteData = event.note.toFirestore();
-      noteData['userId'] = userId; // Agrega el userId a la nota
+      noteData['userId'] = userId;
 
       await _firebaseFirestore.collection('notas').add(noteData);
       add(LoadNotesEvent());
@@ -57,18 +57,30 @@ class NotesBloc extends Bloc<NotesEvent, NotesState> {
       emit(NoteErrorState('Error al agregar la nota'));
     }
   }
-
   Future<void> _onUpdateNoteEvent(UpdateNoteEvent event, Emitter<NotesState> emit) async {
     try {
       await _firebaseFirestore
           .collection('notas')
           .doc(event.note.id)
           .update(event.note.toFirestore());
-      add(LoadNotesEvent());
+
+      // Actualiza solo la nota en el estado actual
+      if (state is NotesLoadedState) {
+        final currentNotes = (state as NotesLoadedState).notes;
+        final updatedNotes = currentNotes.map((note) {
+          if (note.id == event.note.id) {
+            return event.note;
+          }
+          return note;
+        }).toList();
+
+        emit(NotesLoadedState(updatedNotes));
+      }
     } catch (e) {
       emit(NoteErrorState('Error al actualizar la nota'));
     }
   }
+
 
   Future<void> _onDeleteNoteEvent(DeleteNoteEvent event, Emitter<NotesState> emit) async {
     try {
