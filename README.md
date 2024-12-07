@@ -29,4 +29,4 @@ Esta aplicación usa **Flutter 3.10.1**, gestionado por **FVM**. Si aún no tien
 ### 2. FIREBASE
 
 ---
-Yo te proporcionaré el archivo [google-services.json] para que lo agregues al directorio [android/app/] de tu proyecto.
+Yo te proporcionaré el archivo [google-services.json] para que lo agregues al directorio [android/app/] de el proyecto.
