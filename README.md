@@ -31,6 +31,6 @@ Esta aplicación usa **Flutter 3.10.1**, gestionado por **FVM**. Si aún no tien
 ---
 Yo te proporcionaré el archivo [google-services.json] para que lo agregues al directorio [android/app/] de el proyecto.
 
-### 2. Sobre el buscador de la app
+### 3. Sobre el buscador de la app
 
 este busca,por categoria,titulo y tambien descripción.
